@@ -13,16 +13,28 @@ class FileObj():
         for entry in self.innhold:
             print ("    ", entry)
     def save_content(self):
+        if self.filnavn == "":
+            print ("specify filename first!")
+            return False
         with open(self.filnavn, "w", encoding="UTF-8") as f:
             for entry in self.innhold:
-                f.writelines(entry)
+                f.writelines(entry+"\n")
             f.close()
+        return True
 
 fileobj = FileObj()
 while loop:
     cmd = input("-: ")
-    if (cmd == "q"): loop = False
+    if (cmd.lower() == "q"): loop = False
     #fileobj = FileObj()
-    if (cmd == "h"):
-        print ("commands= ADD, SAVE, SHOW")
-    
+    if (cmd.lower() == "h"):
+        print ("commands= FILE, ADD, SAVE, SHOW")
+    if (cmd.lower() == "file"):
+        inp = input("filename:")
+        fileobj.filnavn=inp
+    if (cmd.lower() == "add"):
+        inp = input("add:\n")
+        fileobj.add_content(inp)
+    if (cmd.lower() == "save"):
+        fileobj.save_content()
+    if (cmd.lower() == "show"): fileobj.show_content()
